@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public function getUsers(string $search = '')
     {
-        $users = $this->model->where(function($query) use($search){
+        $users = $this->where(function($query) use($search){
             if ($search){
                 $query->where('email', 'LIKE', "%{$search}%");
                 $query->orWhere('name', 'LIKE', "%{$search}%");
