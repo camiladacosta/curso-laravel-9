@@ -4,7 +4,7 @@
 
 @section('content')
 
-<h1>Novo Usuário</h1>
+<h2 class="text-4xl font-bold">Novo Usuário</h2>
 
 @include('includes.validations-form')
 
