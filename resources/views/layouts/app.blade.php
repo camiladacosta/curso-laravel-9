@@ -9,6 +9,10 @@
 </head>
 <body>
     <div class="flex flex-col items-center mt-24">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="bg-red-500 p-2 text-white rounded">Logout</button>
+        </form>
         @yield('content')
     </div>
 </body>
