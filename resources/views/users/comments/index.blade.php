@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Listagem dos Usuários')
+@section('title', "Comentários do Usuário")
 
 @section('content')
 
 <h1 class="text-4xl font-bold">
-    Listagem dos Usuários
-    <a href="{{ route('users.create') }}">(+)</a>
+    Comentários do Usuário {{ $user->name }}
+    <a href="{{ route('comments.create', $user->id) }}">(+)</a>
 </h1>
 
-<form action="{{ route('users.index') }}" method="get">
+<form action="{{ route('comments.index', $user->id) }}" method="get">
     <div class="flex items-center mt-5">
         <input type="text" name="search" placeholder="Insira o filtro" class="border py-2 pl-2 mb-3 w-60 rounded">
 
@@ -22,34 +22,24 @@
 <table class="table min-w-full divide-y bg-gray-100">
     <thead>
         <tr>
-          <th class="text-center py-2">Nome</th>
-          <th class="text-center py-2">E-mail</th>
+          <th class="text-center py-2">Comentário</th>
+          <th class="text-center py-2">Visível</th>
           <th class="text-center py-2">Ações</th>
         </tr>
       </thead>
       <tbody>
-            @foreach ($users as $user)
+            @foreach ($comments as $comment)
                 <tr>
                     <td class="text-center py-2">
-                        {{$user->name}}
+                        {{$comment->body}}
                     </td>
                     <td class="text-center py-2">
-                        {{$user->email}}
+                        {{$comment->visible ? 'Sim' : 'Não'}}
                     </td>
                     <td class="text-center py-2">
-                        <a href="{{ route('users.edit', $user->id)}}">
+                        <a href="{{ route('comments.edit', ['user' => $user->id, 'id' => $comment->id ])}}">
                             <button class="py-2 px-2 bg-green-400 hover:bg-green-500 text-white rounded">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                            </button>
-                        </a>
-                        <a href="{{ route('users.show', $user->id)}}">
-                            <button class="ml-2 py-2 px-2 bg-gray-500 hover:bg-gray-600 text-white rounded">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
-                            </button>
-                        </a>
-
-                        <a href="{{ route('comments.index', $user->id)}}">
-                            <button class="ml-2 py-2 px-2 bg-blue-200 hover:bg-blue-300 rounded">Anotações({{ $user->comments->count() }})
                             </button>
                         </a>
                     </td>
@@ -57,9 +47,5 @@
             @endforeach
       </tbody>
 </table>
-
-<div class="py-4">
-    {{ $users->appends(['search' => request()->get('search', '')])->links() }}
-</div>
 
 @endsection
