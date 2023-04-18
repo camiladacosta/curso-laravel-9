@@ -31,6 +31,11 @@
             @foreach ($users as $user)
                 <tr>
                     <td class="text-center py-2">
+                        @if ($user->image)
+                            <img src="{{ url("storage/{$user->image}") }}" alt="Imagem" class="object-cover w-20">
+                        @else
+                            <img src="{{ url("images/favicon.ico")}}" alt="Imagem" class="object-cover w-20">
+                        @endif
                         {{$user->name}}
                     </td>
                     <td class="text-center py-2">
